@@ -83,9 +83,6 @@ claude mcp add academic-downloader python -m paper_downloader.mcp_server
 - **安装动作**：无需任何手动安装！只要您使用这两款现代 AI IDE 打开了本工程，它们会自动读取根目录下的 `.cursorrules`。
 - 您直接在侧边栏聊天框 `Ctrl+L` 下达白话指令（如：*“去帮我下 10 篇跟 CRISPR 相关的论文”*），AI 就会自动接管内部终端代您敲击命令并报告结果。
 
-### 4. 发布至 Skills.sh / ClawHub.ai 市场
-- 项目根目录已附带遵循严格双平台架构标准的 `SKILL.md`。任意支持这些扩展市场的 Agent，您只需去平台官网粘贴此 GitHub Repo 的地址，即可完成发布与索引。
-
 ## 🛡️ License
 
 本项目采用 [MIT License](LICENSE) 授权。基于 "AS IS" (按原样提供) 原则提供使用，任何因违反其运行原理或用户私自用于其他用途导致的风险后果，本工具及原作者概不负责。
