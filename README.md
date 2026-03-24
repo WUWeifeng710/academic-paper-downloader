@@ -63,7 +63,28 @@ python -m paper_downloader.cli \
 运行结束后，工具会在您的 `outdir` 下生成三种内容：
 1. **下载完毕的 `.pdf` 原文** (提取通过校验的安全 PDF 文件名)。
 2. **`download_report.txt`**：总结文本文档，展示本次运行的详情状态。
-3. **`papers_metadata.csv`**：涵盖全部已成功匹配或识别到的文章核心字段（如 DOI、发布日期等），便于文献管理软件（如 Mendeley 等）录入归档。
+## 🤖 拥抱 AI Agent 生态 (AI Skills Integration)
+
+本项目在环境与结构上完全原生兼容各大流行 AI 编程助手与生态组件。以下是针对不同 AI 工具的**专属技能 (Skill) 安装/挂载指南**：
+
+### 1. Claude Code 原生 MCP 挂载 (推荐🌟)
+本项目基于官方 MCP (Model Context Protocol) 编写了 `mcp_server.py`，您可以直接将论文批量下载变成您的本地大模型底层扩展能力：
+```bash
+# 进入仓库目录后，用 Claude Code 提供的接口直接挂载并重启
+claude mcp add academic-downloader python -m paper_downloader.mcp_server
+```
+安装完毕后，您只需在终端启动 `claude` 并直接对话：*"帮我查一下关于番茄抗病的论文并下载下来"*。
+
+### 2. OpenCode / OpenHands 等通用平台部署
+若是使用各类基于 Prompt 注入驱动的 AI 终端智能体（如 OpenCode），可以直接导入我为您准备的通用大模型动作说明手册：
+- **安装动作**：在您的 Agent 系统上下文中，使用 `cat agent_instructions/CLAUDE_CODE_SKILL.md`（或将其内容配置到 OpenCode 的 System Rules 中）导入本技能的操作规范即可。
+
+### 3. Cursor / Windsurf 零代码集成
+- **安装动作**：无需任何手动安装！只要您使用这两款现代 AI IDE 打开了本工程，它们会自动读取根目录下的 `.cursorrules`。
+- 您直接在侧边栏聊天框 `Ctrl+L` 下达白话指令（如：*“去帮我下 10 篇跟 CRISPR 相关的论文”*），AI 就会自动接管内部终端代您敲击命令并报告结果。
+
+### 4. 发布至 Skills.sh / ClawHub.ai 市场
+- 项目根目录已附带遵循严格双平台架构标准的 `SKILL.md`。任意支持这些扩展市场的 Agent，您只需去平台官网粘贴此 GitHub Repo 的地址，即可完成发布与索引。
 
 ## 🛡️ License
 
