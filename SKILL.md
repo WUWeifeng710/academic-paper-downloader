@@ -1,45 +1,55 @@
 ---
 name: academic-paper-downloader
-description: Use when the user asks to find papers, download literature, collect references, or build a literature library. This is a powerful multi-source CLI downloader supporting PMC, PubMed, Crossref, OpenAlex, Unpaywall, and Publisher scraping.
+description: An automated literature retrieval and open-access PDF mass-downloader. Integrates PMC, PubMed, Crossref, OpenAlex, and Unpaywall API. Best used when the user needs to find, collect, or download academic papers based on a research query.
+version: 1.0.0
+author: WUWeifeng710
+tags:
+  - academic
+  - literature
+  - python
+  - automation
+  - research
 ---
 
-# Academic Paper Batch Downloader
+# Academic Paper Downloader Skill
 
-A highly concurrent, resilient CLI tool for downloading academic literature PDFs from multiple sources (PMC, PubMed, Crossref, OpenAlex, etc.) and aggregating open-access links via Unpaywall.
+You are an AI programming assistant/agent equipped with the `academic-paper-downloader` skill. 
 
-## Agent Usage Instructions
+## 🛠 Prerequisites (Environment Setup)
+Before executing this skill, ensure the environment has the necessary Python dependencies. Execute the following command silently:
+```bash
+pip install requests colorlog tqdm
+```
 
-When the user asks you to download papers or do a literature search:
+## 🎯 When to Use This Skill
+Activate this skill whenever the user asks to:
+1. Search for academic papers or scientific literature.
+2. Download PDFs for a specific research topic (e.g., "Find me literature on tomato disease resistance").
+3. Build a local paper database.
 
-1. **Clarify Requirements (if needed)**:
-    - Keywords / Boolean Search Query (e.g., `(tomato) AND (disease resistance breeding) AND (review)`)
-    - Their Email (Required for Unpaywall). Tell them exactly why it's needed (fair-use polite pool). Do not use `@example.com`.
-    - Whether they have Institutional PDF Access (optional, defaults to false)
-    - Target output directory (where the files and report CSV will be saved)
+## 🚀 Execution Instructions
 
-2. **Installation (First Time Only)**:
-   Navigate to the project root where `project_downloader` resides and run:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Step 1: Gather Parameters
+To run the underlying Python tool, you must determine:
+- **`--queries`**: Formulate a high-quality PubMed-style Boolean search query based on the user's intent. (e.g., `"(tomato) AND (disease resistance)"`)
+- **`--email`**: An email address is REQUIRED by the Crossref/Unpaywall APIs. Ask the user for their email if missing, or use a placeholder if appropriate, but under NO circumstances use `@example.com`.
+- **`--outdir`**: Create a logical directory name for the output (e.g., `./papers_out`).
+- **`--threads`**: Recommended value is `5`.
 
-3. **Execution**:
-   Run the module programmatically:
-   ```bash
-   python -m paper_downloader.cli --queries "<USER_QUERY>" --email <USER_EMAIL> --outdir <OUTPUT_PATH> --threads 5
-   ```
+### Step 2: Run the Downloader Tool
+Run the tool using the following CLI command:
+```bash
+python -m paper_downloader.cli --queries "<YOUR_BOOLEAN_QUERY>" --email <EMAIL> --outdir <OUT_DIR> --threads 5
+```
 
-   **CLI Arguments**:
-   - `--queries`: Search query (PubMed Boolean style).
-   - `--email`: Valid email string for API cross-requests.
-   - `--outdir`: Absolute path to export PDFs and CSV report.
-   - `--threads`: (Optional) concurrency level 1-10.
-   - `--retmax`: (Optional) max search results per engine (default 30).
-   - `--institutional`: (Optional) flag if user has publisher PDF institutional access.
+### Step 3: Parse and Report Results
+Once the CLI tool finishes executing, it will generate two files in the `<OUT_DIR>`:
+1. `download_report.txt`: A human-readable text summary of successful and failed downloads.
+2. `papers_metadata.csv`: A strictly formatted CSV file of all retrieved paper metadata.
 
-4. **Monitoring**:
-   The script manages state (via local JSON cache) and automatically skips successfully downloaded PDFs on rerun. Read the generated `download_report.txt` and `papers_metadata.csv` to format a nice summary response for the user after the command completes.
+**Your final action:** 
+Read `download_report.txt` and `papers_metadata.csv`. Present a concise, beautifully formatted Markdown summary to the user, listing the titles, DOIs, and channels of the successfully downloaded papers, along with the absolute path where they have been saved on the user's local machine.
 
-## Limitations
-- Chinese local databases (CNKI/Wanfang) are not supported.
-- `mdpi`/`wiley` anti-bot measures might block a tiny fraction of PDFs without institutional networks or proxy.
+## ⚠️ Constraints & Guidelines
+- **Do not invent papers**: Only report what is actually written in the `papers_metadata.csv` file. 
+- **Graceful Failure**: If the command fails, read the terminal output or log files and suggest corrections to the user.
